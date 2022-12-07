@@ -793,15 +793,22 @@ half4 PixelStage(Varyings input, bool facing : SV_IsFrontFace) : SV_Target
     output.rgb += GTLightingPhysicallyBased(brdfData, light.color, light.direction, worldNormal, worldViewDir);
 #endif
     // No lighting, but show reflections.
-#elif defined(_REFLECTIONS) 
-    half3 reflectVector = reflect(-worldViewDir, worldNormal);
+#endif
+
+#if defined(_REFLECTIONS) || defined(_RIM_LIGHT) || defined(_ENVIRONMENT_COLORING)
+    half fresnel = 1 - saturate(dot(worldViewDir, worldNormal));
+#endif
+
+#if defined(_REFLECTIONS)
+    half3 reflectVector = reflect(incident, worldNormal);
     half3 reflection = GTGlossyEnvironmentReflection(reflectVector, GTPerceptualSmoothnessToPerceptualRoughness(_Smoothness), occlusion);
-    output.rgb = (albedo.rgb * 0.5h) + (reflection * (_Smoothness + _Metallic) * 0.5h);
+    half fresnelApprox = lerp(lerp(.02, 0, _Metallic), 1, fresnel * fresnel * fresnel * fresnel); // ~.02 from real-world reflectance mesurements
+    reflection = lerp(reflection * albedo, reflection, fresnelApprox);
+    output.rgb = lerp(output.rgb, reflection, fresnelApprox);
 #endif
 
     // Fresnel lighting.
 #if defined(_RIM_LIGHT)
-    half fresnel = 1.0h - saturate(abs(dot(worldViewDir, worldNormal)));
     output.rgb += _RimColor * pow(fresnel, _RimPower);
 #endif
 
@@ -830,10 +837,9 @@ half4 PixelStage(Varyings input, bool facing : SV_IsFrontFace) : SV_Target
     // Environment coloring.
 #if defined(_ENVIRONMENT_COLORING)
     half3 environmentColor = incident.x * incident.x * _EnvironmentColorX +
-                              incident.y * incident.y * _EnvironmentColorY +
-                              incident.z * incident.z * _EnvironmentColorZ;
-    output.rgb += environmentColor * max(0.0, dot(incident, worldNormal) + _EnvironmentColorThreshold) * _EnvironmentColorIntensity;
-
+                             incident.y * incident.y * _EnvironmentColorY +
+                             incident.z * incident.z * _EnvironmentColorZ;
+    output.rgb += environmentColor * max(0.0, fresnel + _EnvironmentColorThreshold) * _EnvironmentColorIntensity;
 #endif
 
 #if defined(_NEAR_PLANE_FADE)
@@ -862,7 +868,7 @@ half4 PixelStage(Varyings input, bool facing : SV_IsFrontFace) : SV_Target
 #elif defined(_ADDITIVE_ON)
     output *= _Fade;
 #endif
-
+    
     return output;
 }
 
