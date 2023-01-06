@@ -3,12 +3,13 @@
 
 void MainLight_float(out float3 direction, out float3 color)
 {
-    direction = float3(0.5, 0.5, 0);
-    color = float3(1, 1, 1);
-#if LIGHTWEIGHT_LIGHTING_INCLUDED
+#ifdef SHADERGRAPH_PREVIEW
+    direction = float3(.5, .5, 0);
+    color = 1;
+#else
     Light light = GetMainLight();
     direction = light.direction;
-    color = _MainLightColor;
+    color = light.color;
 #endif
 }
 

@@ -22,8 +22,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: GTStandard
   m_Shader: {fileID: -6465566751694194690, guid: 560f77b902a0a5c40ad74ad45217df89, type: 3}
-  m_ShaderKeywords: BOOLEAN_6BF3E1A895E24FC39DD455941EADB9B5_ON BOOLEAN_C6F032C19C2341F3912DD86B75C3A019_ON
-    BOOLEAN_F7957027D6C54BC88AD5A22445F25A4C_ON
+  m_ShaderKeywords: BOOLEAN_6BF3E1A895E24FC39DD455941EADB9B5_ON BOOLEAN_C31E073C63F0421BA2727A98D315725B_ON
+    BOOLEAN_C6F032C19C2341F3912DD86B75C3A019_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -96,13 +96,14 @@ Material:
     m_Floats:
     - BOOLEAN_4279E8B8D90241D3B2F5FCAA05F6FC51: 0
     - BOOLEAN_6BF3E1A895E24FC39DD455941EADB9B5: 1
-    - BOOLEAN_C31E073C63F0421BA2727A98D315725B: 0
+    - BOOLEAN_C31E073C63F0421BA2727A98D315725B: 1
     - BOOLEAN_C6F032C19C2341F3912DD86B75C3A019: 1
-    - BOOLEAN_F7957027D6C54BC88AD5A22445F25A4C: 1
+    - BOOLEAN_F7957027D6C54BC88AD5A22445F25A4C: 0
     - Vector1_256f145cffe44574a0deae4a10594b54: 0.07
     - Vector1_323c1b6e76e147bd9e8e253dc5eaad0c: 0
     - Vector1_4a4c348e191e4101ae7c3b654c1a513b: 0
-    - Vector1_cce6da41312741269e957fcbe3ce93d1: 0.81
+    - Vector1_cce6da41312741269e957fcbe3ce93d1: 0.5
+    - Vector1_d3b4bf03cde54758afba0f58964ff0f1: 0
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -130,7 +131,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_fe5003f8418249258a8455d9381bdb86: {r: 0.78, g: 0.78, b: 0.78, a: 0}
+    - Color_fe5003f8418249258a8455d9381bdb86: {r: 1, g: 1, b: 1, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
